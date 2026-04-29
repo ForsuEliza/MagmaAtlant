@@ -3,27 +3,56 @@
 
 {% block content %}
 
-<h1>Vulkāni</h1>
-
-<div class="cards">
-    <div class="card">
+<div class="block">
+    <div class="text">
         <h2>Kas ir vulkāns?</h2>
-    <h3>Vulkāns ir vieta uz Zemes, kur magma no dziļumiem izlaužas līdz virsmai. Kad spiediens zem Zemes garozas kļūst pārāk liels, tas izraisa izvirdumu, kura laikā izplūst lava, pelni un gāzes. Šie procesi var radīt gan jaunus kalnus, gan iznīcināt veselas teritorijas.</h3>
-    <img src="{{ url_for('static', filename='images/vulkani1.jpg') }}">
-    <p>Fagradalsfjall vulkāns Islandē</p>
-</div>
-</div>
-
-<div class="Vulkani">
-
+        <h3>Vulkāns ir vieta uz Zemes, kur magma no dziļumiem izlaužas līdz virsmai. Kad spiediens zem Zemes garozas kļūst pārāk liels, tas izraisa izvirdumu, kura laikā izplūst lava, pelni un gāzes. Šie procesi var radīt gan jaunus kalnus, gan iznīcināt veselas teritorijas.</h3>
+    </div>
+    <div class="image">
+        <img src="{{ url_for('static', filename='images/vulkani1.jpg') }}">
+        <p>Fagradalsfjall vulkāns Islandē</p>
+    </div>
 </div>
 
+<div class="block reverse">
+    <div class="text">
+        <h2>Kāpēc vulkāni izvirst?</h2>
+        <h3>Vulkānu izvirdumus izraisa milzīgs spiediens Zemes iekšienē. Magma, kas atrodas dziļumā, cenšas izkļūt uz augšu caur plaisām litosfērā. Kad spiediens kļūst pārāk liels, notiek eksplozija vai lēna lavas izplūšana.</h3>
+    </div>
+    <div class="image">
+        <img src="{{ url_for('static', filename='images/vulkani2.jpg') }}">
+        <p>Vulkāna izvirduma diagramma</p>
+    </div>
+</div>
 
-<div class="Video"> 
-<img src="{{ url_for('static', filename='images/vulkans.jpg') }}">
+<div class="block">
+    <div class="text">
+        <h2>Kur atrodas visvairāk vulkānu?</h2>
+        <h3>Lielākā daļa aktīvo vulkānu atrodas tā sauktajā Klusā okeāna <strong>“Uguns gredzenā”</strong>. Tā ir zona, kur sastopas vairākas tektoniskās plātnes.</h3>
+    </div>
+    <div class="image">
+        <img src="{{ url_for('static', filename='images/vulkani3.png') }}">
+        <p>Uguns loks</p>
+    </div>
+</div>
+
+<div class="block reverse">
+    <div class="text">
+        <h2>Vulkāni ārpus Zemes</h2>
+        <h3>Vulkāni neatrodas tikai uz Zemes, bet tie pastāv arī citur Saules sistēmā. Lielākais zināmais vulkāns atrodas uz Marsa - <strong>Olympus Mons</strong>. Tas ir apmēram 3 reizes augstāks par Everestu.</h3>
+    </div>
+    <div class="image">
+        <img src="{{ url_for('static', filename='images/vulkani4.jpg') }}">
+        <p>Olympus Mons</p>
+    </div>
 </div>
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2646_HTcQVc?si=Xj-y670DzPEQ58Du&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="video">
+    <h2>Into The Heart Of A Volcano | Journey To Fire Mountain</h2>
+    <iframe width="560" height="315"  src="https://www.youtube.com/embed/2646_HTcQVc?si=6OBGYu3f59AlMGPb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <p>BBC Earth Science</p>
+</div>
+
 
 {% endblock %}

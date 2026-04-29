@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Sākums{% endblock %}
+
+{% block content %}
+
+<h1>Vulkāni</h1>
+
+<div class="cards">
+    <div class="card">
+        <h2>Kas ir vulkāns?</h2>
+    <h3>Vulkāns ir vieta uz Zemes, kur magma no dziļumiem izlaužas līdz virsmai. Kad spiediens zem Zemes garozas kļūst pārāk liels, tas izraisa izvirdumu, kura laikā izplūst lava, pelni un gāzes. Šie procesi var radīt gan jaunus kalnus, gan iznīcināt veselas teritorijas.</h3>
+    <img src="{{ url_for('static', filename='images/vulkani1.jpg') }}">
+    <p>Fagradalsfjall vulkāns Islandē</p>
+</div>
+</div>
+
+<div class="Vulkani">
+
+</div>
+
+
+<div class="Video"> 
+<img src="{{ url_for('static', filename='images/vulkans.jpg') }}">
+</div>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2646_HTcQVc?si=Xj-y670DzPEQ58Du&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+{% endblock %}

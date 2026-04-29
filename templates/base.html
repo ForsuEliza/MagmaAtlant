@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}">
+</head>
+<body>
+
+<header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+    <nav>
+        <a href="/">Sākums</a>
+        <a href="/vulkani">Vulkāni</a>
+    </nav>
+</header>
+
+<div class="container">
+{% block content %}{% endblock %}
+</div>
+
+<footer>
+    <p>© 2026 MagmaAtlas</p>
+</footer>
+
+</body>
+</html>

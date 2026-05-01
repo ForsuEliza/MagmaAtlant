@@ -74,6 +74,7 @@ h3, p{
     background: #FBFFFE;
     margin: 100px;
 
+    transition: 0.1s ease;
 
     border-radius: 12px;
 

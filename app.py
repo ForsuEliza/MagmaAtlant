@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+from pathlib import Path
 
 app = Flask(__name__)
 
 def get_db():
-    conn = sqlite3.connect('database.db')
+    db = Path(__file__).parent / "Datubaze"
+    conn = sqlite3.connect(db)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -13,11 +15,21 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/vulkani')
+@app.route("/vulkani")
 def vulkani():
-    db = get_db()
-    vulkani = db.execute("SELECT * FROM vulkani").fetchall()
-    return render_template('vulkani.html', vulkani=vulkani)
+    conn = get_db()
+
+    vulkani = conn.execute("""
+    SELECT Vulkani.*, 
+           Vulkani_valstis.country,
+           Vulkani_continenti.continent
+    FROM Vulkani
+    JOIN Vulkani_valstis ON Vulkani.id_country = Vulkani_valstis.id
+    JOIN Vulkani_continenti ON Vulkani_valstis.id_continent = Vulkani_continenti.id
+    """).fetchall()
+
+    conn.close()
+    return render_template("vulkani.html", vulkani=vulkani)
 
 
 @app.route('/vulkani/<int:id>')

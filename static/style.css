@@ -25,6 +25,9 @@ header {
     height: 100px;
 }
 
+a{
+    text-decoration: none;
+}
 
 nav a {
     color: #96031A;
@@ -74,8 +77,6 @@ h3, p{
     background: #FBFFFE;
     margin: 100px;
 
-    transition: 0.1s ease;
-
     border-radius: 12px;
 
     text-align: center;
@@ -88,7 +89,7 @@ h3, p{
     border-radius: 12px;
 }
 
-.block{
+.block, .block_vulkani{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -101,7 +102,15 @@ h3, p{
 
     border-radius: 12px;
 
+}
+
+
+.block_vulkani:hover{
+    box-shadow: 0 0 15px #96031A,
+    0 0 30px #FAA916;
+    transform: translateY(-5px);
     transition: 0.1s ease;
+
 }
 
 .block.reverse {
@@ -123,15 +132,7 @@ h3, p{
     max-width: 420px;
     border-radius: 12px;
 
-    transition: 0.4s ease;
 }
-
-.block:hover, .video:hover {
-    box-shadow: 0 0 15px #96031A,
-                0 0 30px #FAA916;
-    transform: translateY(-5px);
-}
-
 
 
 img {

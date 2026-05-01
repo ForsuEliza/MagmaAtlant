@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Top 10 vulkāni{% endblock %}
+
+{% block content %}
+
+<h1>Top 10 vulkāni</h1>
+
+{% for v in vulkani %}
+
+<a href="{{ url_for('vulkans', id=v.id) }}" class="btn">
+    <div class="block_vulkani">
+        <div class="text">
+            <h2>{{ v.name }}</h2>
+            <h3>{{ v.country }}</h3>
+        </div>
+        <div class="image">
+            <img src="{{ url_for('static', filename='images/' + v.images) }}" alt="{{ v.name }}">
+        </div>
+    </div>
+</a>
+
+{% endfor %}
+
+{% endblock %}

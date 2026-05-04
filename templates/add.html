@@ -6,21 +6,22 @@
 
 <h1>Pievienot vulkānu</h1>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
 <input name="name" placeholder="Nosaukums">
 <input name="height" placeholder="Augstums (m)">
 <input name="diameter" placeholder="Diametrs (km)">
 <input name="coordinates" placeholder="Koordinātes (lat, lon)">
 
-<!-- 📸 BILDE -->
-<input name="images" placeholder="Attēla nosaukums (piem. etna.jpg)">
+<input type="file" name="image">
 
 <select name="country">
     {% for v in valstis %}
     <option value="{{ v.id }}">{{ v.country }}</option>
     {% endfor %}
 </select>
+
+<input name="new_country" placeholder="Vai pievieno jaunu valsti">
 
 <select name="type">
     {% for t in tipi %}

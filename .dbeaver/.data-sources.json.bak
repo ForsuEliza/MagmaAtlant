@@ -1,14 +1,27 @@
 {
 	"folders": {},
 	"connections": {
-		"sqlite_jdbc-19df441ac0c-289f6f6523315887": {
+		"sqlite_jdbc-19de4e55f6e-4b791185604b16ed": {
 			"provider": "sqlite",
 			"driver": "sqlite_jdbc",
-			"name": "VulkanuSaraksts",
+			"name": "Datubaze",
 			"save-password": true,
 			"configuration": {
-				"database": "C:\\Users\\22-06-22\\Documents\\GitHub\\MagmaAtlant\\VulkanuSaraksts",
-				"url": "jdbc:sqlite:C:\\Users\\22-06-22\\Documents\\GitHub\\MagmaAtlant\\VulkanuSaraksts",
+				"database": "C:\\Users\\22-06-22\\Documents\\GitHub\\MagmaAtlant\\Datubaze",
+				"url": "jdbc:sqlite:C:\\Users\\22-06-22\\Documents\\GitHub\\MagmaAtlant\\Datubaze",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true
+			}
+		},
+		"sqlite_jdbc-19df43e46e9-1374fde62ca1b79f": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "app.py",
+			"save-password": true,
+			"configuration": {
+				"database": "C:\\Users\\22-06-22\\Documents\\GitHub\\MagmaAtlant\\app.py",
+				"url": "jdbc:sqlite:C:\\Users\\22-06-22\\Documents\\GitHub\\MagmaAtlant\\app.py",
 				"configurationType": "MANUAL",
 				"type": "dev",
 				"closeIdleConnection": true

@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 from pathlib import Path
 
+
+
 app = Flask(__name__)
 
 def get_db():
-    db = Path(__file__).parent / "Datubaze"
+    db = Path(__file__).parent / "VulkanuSaraksts"
     conn = sqlite3.connect(db)
     conn.row_factory = sqlite3.Row
     return conn
@@ -21,12 +23,14 @@ def vulkani():
     conn = get_db()
 
     vulkani = conn.execute("""
-    SELECT vulkani.*, 
-           Vulkani_valstis.country,
-           Vulkani_continenti.continent
+    SELECT vulkani.*,
+           Vulkani_kontinenti.continent,
+           Vulkani_tips.type,
+           Vulkani_aktivitate.eruption_reason
     FROM vulkani
-    JOIN Vulkani_valstis ON vulkani.id_country = Vulkani_valstis.id
-    JOIN Vulkani_continenti ON Vulkani_valstis.id_continent = Vulkani_continenti.id
+    LEFT JOIN Vulkani_kontinenti ON vulkani.id_continent = Vulkani_kontinenti.id
+    LEFT JOIN Vulkani_tips ON vulkani.id_type = Vulkani_tips.id
+    LEFT JOIN Vulkani_aktivitate ON vulkani.id_activity = Vulkani_aktivitate.id
     """).fetchall()
 
     conn.close()
@@ -38,16 +42,14 @@ def vulkans(id):
     conn = get_db()
 
     vulkans = conn.execute("""
-    SELECT vulkani.*, 
-           Vulkani_valstis.country,
-           Vulkani_continenti.continent,
-           Vulkanu_tips.type,
+    SELECT vulkani.*,
+           Vulkani_kontinenti.continent,
+           Vulkani_tips.type,
            Vulkani_aktivitate.eruption_reason
     FROM vulkani
-    JOIN Vulkani_valstis ON vulkani.id_country = Vulkani_valstis.id
-    JOIN Vulkani_continenti ON Vulkani_valstis.id_continent = Vulkani_continenti.id
-    JOIN Vulkanu_tips ON vulkani.id_type = Vulkanu_tips.id
-    JOIN Vulkani_aktivitate ON vulkani.id_activity = Vulkani_aktivitate.id
+    LEFT JOIN Vulkani_kontinenti ON vulkani.id_continent = Vulkani_kontinenti.id
+    LEFT JOIN Vulkani_tips ON vulkani.id_type = Vulkani_tips.id
+    LEFT JOIN Vulkani_aktivitate ON vulkani.id_activity = Vulkani_aktivitate.id
     WHERE vulkani.id = ?
     """, (id,)).fetchone()
 
@@ -92,42 +94,39 @@ def delete(id):
 
 
 @app.route("/add", methods=["GET", "POST"])
-def add():
+def admin():
     conn = get_db()
 
     if request.method == "POST":
+
         conn.execute("""
-        INSERT INTO vulkani 
-        (name, height, diameter, coordinates, images, id_country, id_type, id_activity, last_eruption, damage)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO Vulkani
+        (name, height, diameter, images, country, id_continent, id_type, id_activity, coordinates, last_eruption, damage)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             request.form["name"],
             request.form["height"],
             request.form["diameter"],
-            request.form["coordinates"],
-            request.form["images"],
+            None,
             request.form["country"],
+            request.form["continent"],
             request.form["type"],
             request.form["activity"],
+            request.form["coordinates"],
             request.form["last_eruption"],
             request.form["damage"]
         ))
-        conn.commit()
-        conn.close()
-        return redirect(url_for("vulkani"))
 
-    valstis = conn.execute("SELECT * FROM Vulkani_valstis").fetchall()
-    tipi = conn.execute("SELECT * FROM Vulkanu_tips").fetchall()
+        conn.commit()
+
+    kontinenti = conn.execute("SELECT * FROM Vulkani_kontinenti").fetchall()
+    tipi = conn.execute("SELECT * FROM Vulkani_tips").fetchall()
     aktivitate = conn.execute("SELECT * FROM Vulkani_aktivitate").fetchall()
 
     conn.close()
 
-    return render_template("add.html",
-        valstis=valstis,
+    return render_template("admin.html",
+        kontinenti=kontinenti,
         tipi=tipi,
         aktivitate=aktivitate
     )
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

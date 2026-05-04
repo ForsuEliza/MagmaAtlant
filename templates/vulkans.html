@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <div class="block">
+
+        <div class="text">
+            <h1>{{ vulkans.name }}</h1>
+
+            <p><b>Valsts:</b> {{ vulkans.country }}</p>
+            <p><b>Kontinents:</b> {{ vulkans.continent }}</p>
+
+            <p><b>Augstums:</b> {{ vulkans.height }} m</p>
+            <p><b>Diametrs:</b> {{ vulkans.diameter }} km</p>
+            <p><b>Koordinātes:</b> {{ vulkans.coordinates }}</p>
+
+            <p><b>Vulkāna tips:</b> {{ vulkans.type }}</p>
+        </div>
+
+        <div class="image">
+            <img src="{{ url_for('static', filename='images/' + vulkans.images) }}">
+        </div>
+
+    </div>
+
+    <div class="block">
+        <div class="text"><h2>Aktivitāte</h2>
+
+        <p><b>Tips:</b> {{ vulkans.eruption_reason }}</p>
+        <p><b>Pēdējais izvirdums:</b> {{ vulkans.last_eruption }}</p>
+        <p><b>Postījumi:</b> {{ vulkans.damage }}</p>
+        </div>
+    </div>
+
+
+ <div class="rediget">
+
+    <h2>Rediģēt</h2>
+
+    <form method="POST"
+          action="{{ url_for('edit_activity', id=vulkans.id) }}"
+          class="form-box">
+
+        <div class="item">
+            <h3>Aktivitātes tips:</h3>
+            <select name="activity">
+                {% for a in aktivitate %}
+                <option value="{{ a.id }}"
+                    {% if a.id == vulkans.id_activity %}selected{% endif %}>
+                    {{ a.eruption_reason }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="item">
+            <h3>Pēdējais izvirdums:</h3>
+            <input type="text"
+                   name="last_eruption"
+                   value="{{ vulkans.last_eruption }}">
+        </div>
+
+        <div class="item">
+            <h3>Postījumi:</h3>
+            <textarea name="damage">{{ vulkans.damage }}</textarea>
+        </div>
+
+        <div class="btn">
+            <button type="submit">Saglabāt</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+{% endblock %}

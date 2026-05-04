@@ -112,6 +112,88 @@ h3, p{
     transition: 0.1s ease;
 
 }
+.rediget {
+    background: #FBFFFE;
+    padding: 30px;
+    border-radius: 12px;
+    margin: 20px;
+}
+
+.form-box {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: stretch; 
+}
+
+.item {
+    background: #1B1B1E;
+    padding: 20px;
+    border-radius: 10px;
+
+
+    flex: 1;
+    min-width: 250px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item h3{
+    color: #FAA916;
+}
+
+textarea{
+    width: 100%;
+    min-height: 100px;
+
+    padding: 10px;
+
+    border-radius: 8px;
+    border: none;
+
+    font-size: 15px;
+
+    resize: none;
+    box-sizing: border-box;
+}
+
+select,
+input {
+    width: 100%;
+    padding: 10px;
+
+    border-radius: 8px;
+    border: none;
+
+    margin-top: 10px;
+
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+button {
+    background: #96031A;
+    color: white;
+
+    border: none;
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    margin-top: 15px;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #FAA916;
+    color: #1B1B1E;
+}
 
 .block.reverse {
     flex-direction: row-reverse;

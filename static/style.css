@@ -89,7 +89,7 @@ h3, p{
     border-radius: 12px;
 }
 
-.block, .block_vulkani{
+.block{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -103,8 +103,19 @@ h3, p{
     border-radius: 12px;
 
 }
+.block_vulkani{
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
 
+    padding: 50px;
+    gap: 50px;
 
+    background: #FBFFFE;
+    margin: 100px;
+
+    border-radius: 12px;
+}
 .block_vulkani:hover{
     box-shadow: 0 0 15px #96031A,
     0 0 30px #FAA916;
@@ -124,6 +135,41 @@ h3, p{
     gap: 20px;
     flex-wrap: wrap;
     align-items: stretch; 
+}
+
+
+.card-link{
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    background: #96031A;
+    color: white;
+
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    z-index: 10;
+    transition: 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #FAA916;
+    color: #1B1B1E;
 }
 
 .item {
@@ -222,6 +268,47 @@ img {
     height: auto;
 }
 
+.add-form {
+    background: #FBFFFE;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 12px;
+
+    max-width: 900px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-form input,
+.add-form select {
+    background: #1B1B1E;
+    color: #FAA916;
+    border: 1px solid #393639;
+
+    transition: 0.3s;
+}
+
+.add-form input:focus,
+.add-form select:focus {
+    outline: none;
+    border: 1px solid #96031A;
+    box-shadow: 0 0 10px #96031A;
+}
+
+.add-form input::placeholder {
+    color: #FAA916;
+    opacity: 0.6;
+}
+
+.add-form h1 {
+    text-align: center;
+    color: #96031A;
+}
+
 @media (max-width: 900px) {
 
     .video, .block {
@@ -250,7 +337,6 @@ img {
     }
 }
 
-/* 📱 PHONE */
 @media (max-width: 500px) {
 
     h1 {

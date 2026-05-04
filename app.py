@@ -58,7 +58,7 @@ def vulkans(id):
     return render_template("vulkans.html", vulkans=vulkans, aktivitate=aktivitate)
 
 
-# ✏️ Rediģēt aktivitāti
+
 @app.route("/edit_activity/<int:id>", methods=["POST"])
 def edit_activity(id):
     conn = get_db()
@@ -80,7 +80,7 @@ def edit_activity(id):
     return redirect(url_for("vulkans", id=id))
 
 
-# ❌ Dzēst vulkānu
+
 @app.route("/delete/<int:id>")
 def delete(id):
     conn = get_db()
@@ -90,7 +90,7 @@ def delete(id):
     return redirect(url_for("vulkani"))
 
 
-# ➕ Pievienot vulkānu
+
 @app.route("/add", methods=["GET", "POST"])
 def add():
     conn = get_db()
@@ -117,7 +117,7 @@ def add():
         return redirect(url_for("vulkani"))
 
     valstis = conn.execute("SELECT * FROM Vulkani_valstis").fetchall()
-    tipi = conn.execute("SELECT * FROM Vulkani_tips").fetchall()
+    tipi = conn.execute("SELECT * FROM Vulkanu_tips").fetchall()
     aktivitate = conn.execute("SELECT * FROM Vulkani_aktivitate").fetchall()
 
     conn.close()

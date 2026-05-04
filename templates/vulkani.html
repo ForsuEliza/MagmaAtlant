@@ -8,17 +8,24 @@
 
 {% for v in vulkani %}
 
-<a href="{{ url_for('vulkans', id=v.id) }}" class="btn">
-    <div class="block_vulkani">
+<div class="block_vulkani">
+
+    <a href="{{ url_for('delete', id=v.id) }}" class="delete-btn">✖</a>
+
+    <a href="{{ url_for('vulkans', id=v.id) }}" class="card-link">
+
         <div class="text">
             <h2>{{ v.name }}</h2>
             <h3>{{ v.country }}</h3>
         </div>
+
         <div class="image">
             <img src="{{ url_for('static', filename='images/' + v.images) }}" alt="{{ v.name }}">
         </div>
-    </div>
-</a>
+
+    </a>
+
+</div>
 
 {% endfor %}
 

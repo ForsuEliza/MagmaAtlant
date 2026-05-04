@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="add-form">
+
+<h1>Pievienot vulkānu</h1>
+
+<form method="POST">
+
+<input name="name" placeholder="Nosaukums">
+<input name="height" placeholder="Augstums (m)">
+<input name="diameter" placeholder="Diametrs (km)">
+<input name="coordinates" placeholder="Koordinātes (lat, lon)">
+
+<!-- 📸 BILDE -->
+<input name="images" placeholder="Attēla nosaukums (piem. etna.jpg)">
+
+<select name="country">
+    {% for v in valstis %}
+    <option value="{{ v.id }}">{{ v.country }}</option>
+    {% endfor %}
+</select>
+
+<select name="type">
+    {% for t in tipi %}
+    <option value="{{ t.id }}">{{ t.type }}</option>
+    {% endfor %}
+</select>
+
+<select name="activity">
+    {% for a in aktivitate %}
+    <option value="{{ a.id }}">{{ a.eruption_reason }}</option>
+    {% endfor %}
+</select>
+
+<input name="last_eruption" placeholder="Pēdējais izvirdums">
+<input name="damage" placeholder="Postījumi">
+
+<button type="submit">PIEVIENOT</button>
+
+</form>
+
+</div>
+
+{% endblock %}

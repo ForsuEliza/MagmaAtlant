@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 from pathlib import Path
-
-
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = "static/images"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 
 def get_db():
     db = Path(__file__).parent / "VulkanuSaraksts"
@@ -13,9 +17,9 @@ def get_db():
     return conn
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
 
 @app.route("/vulkani")
@@ -23,42 +27,53 @@ def vulkani():
     conn = get_db()
 
     vulkani = conn.execute("""
-    SELECT vulkani.*,
-           Vulkani_kontinenti.continent,
-           Vulkani_tips.type,
-           Vulkani_aktivitate.eruption_reason
-    FROM vulkani
-    LEFT JOIN Vulkani_kontinenti ON vulkani.id_continent = Vulkani_kontinenti.id
-    LEFT JOIN Vulkani_tips ON vulkani.id_type = Vulkani_tips.id
-    LEFT JOIN Vulkani_aktivitate ON vulkani.id_activity = Vulkani_aktivitate.id
+        SELECT Vulkani.*,
+               Vulkani_kontinenti.continent,
+               Vulkani_tips.type,
+               Vulkani_aktivitate.eruption_reason
+        FROM Vulkani
+        LEFT JOIN Vulkani_kontinenti
+            ON Vulkani.id_continent = Vulkani_kontinenti.id
+        LEFT JOIN Vulkani_tips
+            ON Vulkani.id_type = Vulkani_tips.id
+        LEFT JOIN Vulkani_aktivitate
+            ON Vulkani.id_activity = Vulkani_aktivitate.id
     """).fetchall()
 
     conn.close()
     return render_template("vulkani.html", vulkani=vulkani)
 
 
-@app.route('/vulkani/<int:id>')
+@app.route("/vulkani/<int:id>")
 def vulkans(id):
     conn = get_db()
 
     vulkans = conn.execute("""
-    SELECT vulkani.*,
-           Vulkani_kontinenti.continent,
-           Vulkani_tips.type,
-           Vulkani_aktivitate.eruption_reason
-    FROM vulkani
-    LEFT JOIN Vulkani_kontinenti ON vulkani.id_continent = Vulkani_kontinenti.id
-    LEFT JOIN Vulkani_tips ON vulkani.id_type = Vulkani_tips.id
-    LEFT JOIN Vulkani_aktivitate ON vulkani.id_activity = Vulkani_aktivitate.id
-    WHERE vulkani.id = ?
+        SELECT Vulkani.*,
+               Vulkani_kontinenti.continent,
+               Vulkani_tips.type,
+               Vulkani_aktivitate.eruption_reason
+        FROM Vulkani
+        LEFT JOIN Vulkani_kontinenti
+            ON Vulkani.id_continent = Vulkani_kontinenti.id
+        LEFT JOIN Vulkani_tips
+            ON Vulkani.id_type = Vulkani_tips.id
+        LEFT JOIN Vulkani_aktivitate
+            ON Vulkani.id_activity = Vulkani_aktivitate.id
+        WHERE Vulkani.id = ?
     """, (id,)).fetchone()
 
-    aktivitate = conn.execute("SELECT * FROM Vulkani_aktivitate").fetchall()
+    aktivitate = conn.execute(
+        "SELECT * FROM Vulkani_aktivitate"
+    ).fetchall()
 
     conn.close()
 
-    return render_template("vulkans.html", vulkans=vulkans, aktivitate=aktivitate)
-
+    return render_template(
+        "vulkans.html",
+        vulkans=vulkans,
+        aktivitate=aktivitate
+    )
 
 
 @app.route("/edit_activity/<int:id>", methods=["POST"])
@@ -66,13 +81,15 @@ def edit_activity(id):
     conn = get_db()
 
     conn.execute("""
-    UPDATE vulkani 
-    SET id_activity=?, last_eruption=?, damage=?
-    WHERE id=?
+        UPDATE Vulkani
+        SET id_activity = ?,
+            last_eruption = ?,
+            damage = ?
+        WHERE id = ?
     """, (
-        request.form["activity"],
-        request.form["last_eruption"],
-        request.form["damage"],
+        request.form.get("activity"),
+        request.form.get("last_eruption"),
+        request.form.get("damage"),
         id
     ))
 
@@ -82,32 +99,61 @@ def edit_activity(id):
     return redirect(url_for("vulkans", id=id))
 
 
-
 @app.route("/delete/<int:id>")
 def delete(id):
     conn = get_db()
-    conn.execute("DELETE FROM vulkani WHERE id=?", (id,))
+
+    conn.execute(
+        "DELETE FROM Vulkani WHERE id = ?",
+        (id,)
+    )
+
     conn.commit()
     conn.close()
+
     return redirect(url_for("vulkani"))
 
 
-
 @app.route("/add", methods=["GET", "POST"])
-def admin():
+def add():
     conn = get_db()
 
     if request.method == "POST":
 
+        image_file = request.files.get("image")
+        filename = None
+
+        if image_file and image_file.filename != "":
+            filename = secure_filename(image_file.filename)
+
+            image_path = os.path.join(
+                app.config["UPLOAD_FOLDER"],
+                filename
+            )
+
+            image_file.save(image_path)
+
         conn.execute("""
-        INSERT INTO Vulkani
-        (name, height, diameter, images, country, id_continent, id_type, id_activity, coordinates, last_eruption, damage)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO Vulkani
+            (
+                name,
+                height,
+                diameter,
+                images,
+                country,
+                id_continent,
+                id_type,
+                id_activity,
+                coordinates,
+                last_eruption,
+                damage
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             request.form["name"],
             request.form["height"],
             request.form["diameter"],
-            None,
+            filename,
             request.form["country"],
             request.form["continent"],
             request.form["type"],
@@ -118,15 +164,31 @@ def admin():
         ))
 
         conn.commit()
+        conn.close()
 
-    kontinenti = conn.execute("SELECT * FROM Vulkani_kontinenti").fetchall()
-    tipi = conn.execute("SELECT * FROM Vulkani_tips").fetchall()
-    aktivitate = conn.execute("SELECT * FROM Vulkani_aktivitate").fetchall()
+        return redirect(url_for("vulkani"))
+
+    kontinenti = conn.execute(
+        "SELECT * FROM Vulkani_kontinenti"
+    ).fetchall()
+
+    tipi = conn.execute(
+        "SELECT * FROM Vulkani_tips"
+    ).fetchall()
+
+    aktivitate = conn.execute(
+        "SELECT * FROM Vulkani_aktivitate"
+    ).fetchall()
 
     conn.close()
 
-    return render_template("admin.html",
+    return render_template(
+        "add.html",
         kontinenti=kontinenti,
         tipi=tipi,
         aktivitate=aktivitate
     )
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

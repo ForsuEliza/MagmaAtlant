@@ -4,43 +4,62 @@
 
 <div class="add-form">
 
-<h1>Pievienot vulkānu</h1>
+    <h1>Vulkāna pievienošana</h1>
 
-<form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
 
-<input name="name" placeholder="Nosaukums">
-<input name="height" placeholder="Augstums (m)">
-<input name="diameter" placeholder="Diametrs (km)">
-<input name="coordinates" placeholder="Koordinātes (lat, lon)">
+        <input name="name" placeholder="Nosaukums" required>
 
-<input type="file" name="image">
+        <input name="height" placeholder="Augstums (m)">
+        <input name="diameter" placeholder="Diametrs (km)">
 
-<select name="country">
-    {% for v in valstis %}
-    <option value="{{ v.id }}">{{ v.country }}</option>
-    {% endfor %}
-</select>
+        <input name="coordinates"
+               placeholder="Koordinātes">
 
-<input name="new_country" placeholder="Vai pievieno jaunu valsti">
+        <input type="file" name="image">
 
-<select name="type">
-    {% for t in tipi %}
-    <option value="{{ t.id }}">{{ t.type }}</option>
-    {% endfor %}
-</select>
+        <label>Kontinents:</label>
+        <select name="continent" required>
+            {% for c in kontinenti %}
+                <option value="{{ c.id }}">
+                    {{ c.continent }}
+                </option>
+            {% endfor %}
+        </select>
 
-<select name="activity">
-    {% for a in aktivitate %}
-    <option value="{{ a.id }}">{{ a.eruption_reason }}</option>
-    {% endfor %}
-</select>
+        <input name="country"
+               placeholder="Valsts"
+               required>
 
-<input name="last_eruption" placeholder="Pēdējais izvirdums">
-<input name="damage" placeholder="Postījumi">
+        <label>Vulkāna tips:</label>
+        <select name="type">
+            {% for t in tipi %}
+                <option value="{{ t.id }}">
+                    {{ t.type }}
+                </option>
+            {% endfor %}
+        </select>
 
-<button type="submit">PIEVIENOT</button>
+        <label>Aktivitāte:</label>
+        <select name="activity">
+            {% for a in aktivitate %}
+                <option value="{{ a.id }}">
+                    {{ a.eruption_reason }}
+                </option>
+            {% endfor %}
+        </select>
 
-</form>
+        <input name="last_eruption"
+               placeholder="Pēdējais izvirdums">
+
+        <input name="damage"
+               placeholder="Postījumi">
+
+        <button type="submit">
+            PIEVIENOT
+        </button>
+
+    </form>
 
 </div>
 

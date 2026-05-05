@@ -10,7 +10,9 @@
 
 <div class="block_vulkani">
 
-    <a href="{{ url_for('delete', id=v.id) }}" class="delete-btn">✖</a>
+    <form method="POST" action="{{ url_for('delete', id=v.id) }}">
+        <button class="delete-btn">✖</button>
+    </form>
 
     <a href="{{ url_for('vulkans', id=v.id) }}" class="card-link">
 

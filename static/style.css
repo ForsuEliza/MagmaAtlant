@@ -85,7 +85,7 @@ h3, p{
 .video iframe {
     width: 100%;
     max-width: 800px;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 16 / 9;
     border-radius: 12px;
 }
 
